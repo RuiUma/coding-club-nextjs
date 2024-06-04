@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import sgMail from '@sendgrid/mail'
 
-const key = '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'
-// const key2 = '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'
-
+const key = process.env.SG_KEY||''
 sgMail.setApiKey(key)
-
 
 export async function POST(params:NextRequest) {
     console.log('post called');
@@ -15,9 +12,9 @@ export async function POST(params:NextRequest) {
     console.log(targetEmailAddress, type, scheduledTime);
     const msg = {
         to: targetEmailAddress, // Change to your recipient
-        from: '	eason@umatech.work', // Change to your verified sender
+        from: 'coding-club@coding-clubs.org', // Change to your verified sender
         subject: 'Your reservation is now confirmed',
-        text: 'and easy to do anywhere, even with Node.js',
+        text: 'reservation confirmation email',
         html: `<strong>Welcome to coding club shedule system</strong>
                 <br>
                 <p>This Email is sent to ${type}</p>
@@ -27,14 +24,28 @@ export async function POST(params:NextRequest) {
                 <p>Thank you for your reservation!</p> 
         `,
       }
-      const res = await sgMail.send(msg)
-      // const res = [{statusCode:202}]
-      if(res[0].statusCode === 202) {
-        console.log('send success');
+      let res: any
+      try {
+        res = await sgMail.send(msg)
+      } catch (error: any) {
+        console.log(error);
+        const err = error.response.body
+        console.log(err);
+        
         
       }
+      
+      // // const res = [{statusCode:202}]
+      // if(res[0].statusCode === 202) {
+      //   console.log('send success');
+      // }
 
     
-    return new NextResponse(JSON.stringify(res)) 
+    return new NextResponse(JSON.stringify(res), {
+      headers: {
+        'content-type': 'application/json',
+      },
+      
+    }) 
     
 }
