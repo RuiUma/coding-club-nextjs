@@ -10,7 +10,7 @@ type Value = Date | null;
 const Home = () =>  {
 
   const [value] = useState<Value>(new Date());
-  const onChange = (value: Value, event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onChange = (value: any, event:any) => {
 
     if (value === null) {
       return;
