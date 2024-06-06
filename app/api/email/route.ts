@@ -8,15 +8,17 @@ sgMail.setApiKey(key)
 export async function POST(params:NextRequest) {
     console.log('post called');
     
-    const { targetEmailAddress, type, scheduledTime } = await params.json()
- 
-    console.log(targetEmailAddress, type, scheduledTime);
+    const { targetEmailAddress, type, scheduledTime, customerName } = await params.json()
+
+    console.log(targetEmailAddress, type, scheduledTime, customerName);
     const msg = {
-        to: targetEmailAddress, // Change to your recipient
+        to: targetEmailAddress.trim(), // Change to your recipient
         from: 'coding-club@coding-clubs.org', // Change to your verified sender
         subject: 'Your reservation is now confirmed',
         text: 'reservation confirmation email',
-        html: `<strong>Welcome to coding club shedule system</strong>
+        html: `
+                <p><strong>Hi ${customerName}</strong></p>
+                <strong>Welcome to coding club shedule system</strong>
                 <br>
                 <p>This Email is sent to ${type}</p>
                 <br>
