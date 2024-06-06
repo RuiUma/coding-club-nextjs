@@ -9,6 +9,11 @@ export async function middleware(request: NextRequest) {
     requestHeaders.set('x-middleware-test', 'hello')
     const sec = requestHeaders.get('Coding-Clubs')
     if (sec !== process.env.REQ_HEADER_AUTH) {
+        console.log(sec);
+        console.log();
+        
+        console.log(process.env.REQ_HEADER_AUTH);
+        
         return new NextResponse(
             JSON.stringify({
                 message: 'Ha Ha Ha Ha Fool!'
