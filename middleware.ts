@@ -8,6 +8,10 @@ export async function middleware(request: NextRequest) {
     console.log(headerList);
     
     const sec = request.headers.get('Coding-Clubs')
+    console.log('headers from request:');
+    console.log(request.headers);
+    
+    
     if (sec !== process.env.REQ_HEADER_AUTH_KEY) {
         console.log('sec: ' + sec);
         console.log('env: '+ process.env.REQ_HEADER_AUTH_KEY);
