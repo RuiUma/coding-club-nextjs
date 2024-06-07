@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { headers } from 'next/headers'
 
 export async function middleware(request: NextRequest) {
-
-
-
-    const requestHeaders = new Headers(request.headers)
-    requestHeaders.set('x-middleware-test', 'hello')
-    const sec = requestHeaders.get('Coding-Clubs')
-    if (sec !== 'fjdaskljglkfdajglk.gfjdsgiroewnmcxvzxiEFLIUJfklsajd.LJFDISJFKLHUERJKA') {
+    const headerList = headers()
+    console.log('headerList: ');
+    console.log(headerList);
+    
+    const sec = request.headers.get('Coding-Clubs')
+    if (sec !== process.env.REQ_HEADER_AUTH_KEY) {
         console.log('sec: ' + sec);
-        console.log('');
+        console.log('env: '+ process.env.REQ_HEADER_AUTH_KEY);
         
         
         return new NextResponse(
@@ -21,9 +21,7 @@ export async function middleware(request: NextRequest) {
                 status: 404,
             })
     }
-    const response = NextResponse.next({
-        headers: requestHeaders
-    })
+    const response = NextResponse.next()
     response.headers.set('x-middleware-test', 'hello')
     return response
     
