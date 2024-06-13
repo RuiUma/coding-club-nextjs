@@ -12,19 +12,19 @@ export async function middleware(request: NextRequest) {
     console.log(request.headers);
     
     
-    if (sec !== process.env.REQ_HEADER_AUTH_KEY) {
-        console.log('sec: ' + sec);
-        console.log('env: '+ process.env.REQ_HEADER_AUTH_KEY);
+    // if (sec !== process.env.REQ_HEADER_AUTH_KEY) {
+    //     console.log('sec: ' + sec);
+    //     console.log('env: '+ process.env.REQ_HEADER_AUTH_KEY);
         
         
-        return new NextResponse(
-            JSON.stringify({
-                message: 'Ha Ha Ha Ha Fool!'
-            }),
-            {
-                status: 404,
-            })
-    }
+    //     return new NextResponse(
+    //         JSON.stringify({
+    //             message: 'Ha Ha Ha Ha Fool!'
+    //         }),
+    //         {
+    //             status: 404,
+    //         })
+    // }
     const response = NextResponse.next()
     response.headers.set('x-middleware-test', 'hello')
     return response
